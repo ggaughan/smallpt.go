@@ -336,13 +336,13 @@ func main() {
 	cx = Vec{float64(w) * 0.5135 / float64(h), 0.0, 0.0}
 	cy = SMul(Norm(Cross(cx, cam.Direction)), 0.5135)
 	for y := 0; y < h; y++ {
-		fmt.Printf("\rRendering (%d spp) %5.2f",samps*4,100.*float(y)/(float(h)-1.0));
+		fmt.Printf("\rRendering (%d spp) %5.2f",samps*4,100.*float64(y)/(float64(h)-1.0));
 		for x := 0; x < w; x++ {
 			renderPixel(x, y, cx, cy)
 		}
 	}
 
-	f, _ := os.Open("image.ppm", os.O_CREAT|os.O_WRONLY|os.O_TRUNC, 0666)
+	f, _ := os.Create("image.ppm")
 	f.WriteString(fmt.Sprintf("P3\n%d %d\n%d\n", w, h, 255))
 	for _, color := range colors {
 		f.WriteString(fmt.Sprintf("%d %d %d ", ToByte(color.x), ToByte(color.y), ToByte(color.z)))
